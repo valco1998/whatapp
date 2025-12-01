@@ -16,12 +16,13 @@ const generateBoundary = require('../helpers/generate_boundary.js');
 * @param {object} headers Custom HTTP request headers
 * @param {string} formData The formData in key-value form
 * @param {function} streamListener Callback to stream data to
+* @param {object} options Options for the request
 * @returns {object} response
 * @ {number} statusCode
 * @ {object} headers
 * @ {buffer} body
 */
-module.exports = async (method, url, queryParams, headers = {}, formData = {}, streamListener = null) => {
+module.exports = async (method, url, queryParams, headers = {}, formData = {}, streamListener = null, options = null) => {
 
   const boundary = generateBoundary();
   headers['Content-Type'] = `multipart/form-data; boundary=${boundary}`;
@@ -50,7 +51,7 @@ module.exports = async (method, url, queryParams, headers = {}, formData = {}, s
     ].join(`\r\n`);
   }).join(`\r\n`) + (Object.keys(formData).length ? `\r\n--${boundary}--` : ``);
 
-  let result = await send(method, url, queryParams, null, headers, null, body, streamListener);
+  let result = await send(method, url, queryParams, null, headers, null, body, streamListener, options);
   return {
     statusCode: result.statusCode,
     headers: result.headers,

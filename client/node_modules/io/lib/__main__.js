@@ -14,14 +14,15 @@ const send = require('../helpers/send.js');
 * @param {object} headers Custom HTTP request headers
 * @param {string} body The raw request body for POST, PUT requests
 * @param {function} streamListener Callback to stream data to
+* @param {object} options Options for the request
 * @returns {object} response
 * @ {number} statusCode
 * @ {object} headers
 * @ {buffer} body
 */
-module.exports = async (method, url, queryParams = {}, headers = null, body = null, streamListener = null) => {
+module.exports = async (method, url, queryParams = {}, headers = null, body = null, streamListener = null, options = null) => {
 
-  let result = await send(method, url, queryParams, null, headers, null, body, streamListener);
+  let result = await send(method, url, queryParams, null, headers, null, body, streamListener, options);
   return {
     statusCode: result.statusCode,
     headers: result.headers,

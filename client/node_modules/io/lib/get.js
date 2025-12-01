@@ -7,14 +7,15 @@ const send = require('../helpers/send.js');
 * @param {object} headers Custom HTTP request headers
 * @param {object} queryParams Parameters sent as part of the HTTP query string
 * @param {function} streamListener Callback to stream data to
+* @param {object} options Options for the request
 * @returns {object} response
 * @ {number} statusCode
 * @ {object} headers
 * @ {object} data
 */
-module.exports = async (url, authorization = null, headers = null, queryParams = {}, streamListener = null) => {
+module.exports = async (url, authorization = null, headers = null, queryParams = {}, streamListener = null, options = null) => {
 
-  let result = await send('GET', url, queryParams, authorization, headers, {}, null, streamListener);
+  let result = await send('GET', url, queryParams, authorization, headers, {}, null, streamListener, options);
   return {
     statusCode: result.statusCode,
     headers: result.headers,
